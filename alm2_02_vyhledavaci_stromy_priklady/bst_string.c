@@ -27,7 +27,7 @@ bool Insert(Node **root, Item x)
        else if (x > (*u)->item) u=&(*u)->right;
        else return false;
      }
-     { Node *v= new Node;
+     { Node *v= (Node *)malloc(sizeof(Node));
        v->item = x;
        v->left = v->right = NULL;
        *u = v;     }  
@@ -51,7 +51,7 @@ bool Delete(Node **root, Item x)
     }
     { Node *v=*u; 
       *u= v->left ? v->left : v->right;
-      delete v;
+      free(v);//delete v;
     } 
   }
 
