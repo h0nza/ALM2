@@ -30,7 +30,7 @@ bool Insert(Node **root, Item x)
      { Node *v= (Node *)malloc(sizeof(Node));
        v->item = x;
        v->left = v->right = NULL;
-       *u = v;     }  
+       *u = v;     }  
      return true;
    }
 

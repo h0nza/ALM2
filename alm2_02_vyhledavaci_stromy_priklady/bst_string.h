@@ -1,7 +1,9 @@
 
 #include <stdbool.h>
 
-typedef int Item;
+//typedef int Item;
+  typedef char * Item;
+
 typedef struct Node
 {
 	Item item;

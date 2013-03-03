@@ -4,20 +4,20 @@
 
 #include "bst_string.h"
 
+//misto jmena.h:
+extern char *Jmena[];
+extern const int Pocet;
+
 int main() {
+  int i;
 	Node *r=NULL;
-	Insert(&r,6);
-	Insert(&r,5);
-	Insert(&r,7);
-	Insert(&r,4);
-	Insert(&r,8);
-	Insert(&r,3);
-	Insert(&r,9);
-	Insert(&r,2);
-	Insert(&r,10);
-	Insert(&r,1);
+//plneni stromu pomoci char *Jmena[Pocet]; viz jmena.c
+        for (i=0; i<Pocet; i++) {
+	  Insert(&r, Jmena[i]);
+        }
 	Print(r);
 	printf("\n");
+#if 0
 	Node *s=Search(r,4);
 	if(s==NULL) printf("Uzel nenalezen.\n"); else printf("Uzel nalezen.\n");
 	s=Search(r,12);
@@ -31,7 +31,8 @@ int main() {
 	Delete(&r,6);
 	Print(r);
 	printf("\n");
-	system("PAUSE");
+#endif
+//	system("PAUSE");//8-O
 	return 0;
 }
 
