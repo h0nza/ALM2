@@ -33,31 +33,29 @@ bool Insert(Node **root, Item x) {
      Node *pnode = *root;//current node, zacnem na rootu
      Node *parent;
      int compare;//potrebujeme compare() funkci pro Item()!!!
-static int n=0;
 
    //obejdeme se bez dvojitych pointeru!
      parent = pnode;
      while (pnode != NULL) {
        parent = pnode;
-// (x < pnode->item) a (x > pnode->item) potrebujeme nahradit compare() funkci!
-       if (x < pnode->item) {
-	  compare = -1;
+       compare = CompareItem(x, pnode->item);
+       if (compare < 0) {
           pnode = pnode->left;
        }
-       else if (x > pnode->item) {
-	  compare = 1;
+       else if (compare > 0) {
           pnode = pnode->right;
        }
        else
-          return false;// == uz tam je
+          return false;// ==0 uz tam je, nevkladame duplicity
      }
+   //alokujeme a inicializuje novy Node pro Item x:
      pnode = (Node *)malloc(sizeof(Node));
      pnode->item = x;
      pnode->left = pnode->right = NULL;
      if (parent == NULL) {//inicializace, meli jsem prazdny strom
         *root = pnode;
      }
-     else if (compare == -1) {
+     else if (compare < 0) {
              parent->left = pnode;
 	  }
 	  else {
