@@ -6,6 +6,8 @@
 
 #include "bst_string.h"
 
+#include <string.h> //pokud je typedef char* Item; potrebuje strcmp() pro CompareItem()
+
 
 
 Node *Search(Node *root, Item x) { 
@@ -22,22 +24,45 @@ Node *Search(Node *root, Item x) {
      return NULL;
 }
 
+//Item je ted char* retezec
+static int CompareItem(Item a, Item b) {//TODO void* ala compate_fn_t pro qsort() apod!
+  return strcmp(a, b);
+}
+
 bool Insert(Node **root, Item x) { 
-     Node **u=root;
-     while (*u != NULL) {
-       if (x < (*u)->item) {
-          u=&(*u)->left;
+     Node *pnode = *root;//current node, zacnem na rootu
+     Node *parent;
+     int compare;//potrebujeme compare() funkci pro Item()!!!
+static int n=0;
+
+   //obejdeme se bez dvojitych pointeru!
+     parent = pnode;
+     while (pnode != NULL) {
+       parent = pnode;
+// (x < pnode->item) a (x > pnode->item) potrebujeme nahradit compare() funkci!
+       if (x < pnode->item) {
+	  compare = -1;
+          pnode = pnode->left;
        }
-       else if (x > (*u)->item) {
-          u=&(*u)->right;
+       else if (x > pnode->item) {
+	  compare = 1;
+          pnode = pnode->right;
        }
        else
-          return false;
+          return false;// == uz tam je
      }
-     { Node *v= (Node *)malloc(sizeof(Node));
-       v->item = x;
-       v->left = v->right = NULL;
-       *u = v;     }  
+     pnode = (Node *)malloc(sizeof(Node));
+     pnode->item = x;
+     pnode->left = pnode->right = NULL;
+     if (parent == NULL) {//inicializace, meli jsem prazdny strom
+        *root = pnode;
+     }
+     else if (compare == -1) {
+             parent->left = pnode;
+	  }
+	  else {
+	     parent->right = pnode;
+	  }
      return true;
 }
 
