@@ -60,7 +60,7 @@ bool Print(Node *root)
 	if(root!=NULL) 
 	{
 		Print(root->left);
-		printf("%d ",root->item);
+		printf("%s ",root->item);
 		Print(root->right);
 	}
 	return true;
